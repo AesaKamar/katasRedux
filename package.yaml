@@ -23,6 +23,8 @@ dependencies:
 - base >= 4.7 && < 5
 - tasty
 - tasty-hspec
+- parsec
+- parsec-numbers
 
 library:
   source-dirs: src
