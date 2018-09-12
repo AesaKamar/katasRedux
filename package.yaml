@@ -25,6 +25,8 @@ dependencies:
 - tasty-hspec
 - parsec
 - parsec-numbers
+- transformers-either
+- split
 
 library:
   source-dirs: src
