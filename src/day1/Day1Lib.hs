@@ -27,8 +27,6 @@ instance Semigroup Coord2D where
     (<>) (C2D (ax, ay)) (C2D (bx, by)) = C2D ((ax + bx), (ay + by))
 
 
-sampleInput = ["R2", "L3", "L10"]
-sampleMoves = [Move R 2, Move L 3, Move L 10]
 
 rParser :: Parser Move
 rParser = do
@@ -43,9 +41,6 @@ lParser = do
   return $ Move L n
 
 moveParser = rParser <|> lParser
-
-thing = fmap ordinate (scanl orient (North, 0) sampleMoves)
-
 
 orient :: (Compass, Integer) -> Move -> (Compass, Integer)
 orient (compass, _) (Move R d) = (prev compass, d)
