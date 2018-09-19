@@ -56,9 +56,7 @@ ordinate (West , d) = C2D (-d, 0)
 
 
 
-next :: (Enum a, Bounded a) => a -> a
 next = turn 1
-prev :: (Enum a, Bounded a) => a -> a
 prev = turn (-1)
 
 turn :: (Enum a, Bounded a) => Int -> a -> a
