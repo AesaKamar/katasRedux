@@ -33,52 +33,29 @@ directionP =
 directionsP :: Parser [Direction]
 directionsP = many directionP
 
-move :: SquareButton -> Direction -> SquareButton
-move B1 = \case
-  U -> B1
-  L -> B1
-  D -> B4
-  R -> B2
-move B2 = \case
-  U -> B2
-  L -> B1
-  D -> B5
-  R -> B3
-move B3 = \case
-  U -> B3
-  L -> B2
-  D -> B6
-  R -> B3
-move B4 = \case
-  U -> B1
-  L -> B4
-  D -> B7
-  R -> B5
-move B5 = \case
-  U -> B2
-  L -> B4
-  D -> B8
-  R -> B6
-move B6 = \case
-  U -> B3
-  L -> B5
-  D -> B9
-  R -> B6
-move B7 = \case
-  U -> B4
-  L -> B7
-  D -> B7
-  R -> B8
-move B8 = \case
-  U -> B5
-  L -> B7
-  D -> B8
-  R -> B9
-move B9 = \case
-  U -> B6
-  L -> B8
-  D -> B9
-  R -> B9
+
+moveSquare :: Direction -> SquareButton -> SquareButton
+moveSquare U = \case {
+      B1->B1;B2->B2;B3->B3
+    ; B4->B1;B5->B2;B6->B3
+    ; B7->B4;B8->B5;B9->B6
+}
+moveSquare L = \case {
+      B1->B1;B2->B1;B3->B2
+    ; B4->B4;B5->B4;B6->B5
+    ; B7->B7;B8->B7;B9->B8
+}
+moveSquare D = \case {
+      B1->B4;B2->B5;B3->B6
+    ; B4->B7;B5->B8;B6->B9
+    ; B7->B7;B8->B8;B9->B9
+}
+moveSquare R = \case {
+      B1->B2;B2->B3;B3->B3
+    ; B4->B5;B5->B6;B6->B6
+    ; B7->B8;B8->B9;B9->B9
+}
+
 
 moveDiamond :: Direction -> DiamondButton -> DiamondButton
 moveDiamond U = \case {
@@ -110,6 +87,9 @@ moveDiamond R = \case {
                 DD->DD
     }
 
+moveSquareFlip :: SquareButton -> Direction -> SquareButton
+moveSquareFlip = flip moveSquare
+
 moveDiamondFlip :: DiamondButton -> Direction -> DiamondButton
 moveDiamondFlip = flip moveDiamond
 
@@ -120,19 +100,10 @@ parseTraverse :: [[String]] -> Either ParseError [[Direction]]
 parseTraverse = traverse (traverse (parse directionP ""))
 
 
-x :: IO (Either ParseError [SquareButton])
-x = do
+solution :: a -> (a -> Direction -> a)  ->  IO (Either ParseError [a])
+solution startA moveFn= do
   eachLine <- eachCharInLines <$> readFile "./src/day2/input"
   parsedDirs <- pure $ parseTraverse eachLine
   pure $ do
     directions <- parsedDirs
-    Right  $ (scanl $ foldl move) B5 directions
-
-
-y :: IO (Either ParseError [DiamondButton])
-y = do
-  eachLine <- eachCharInLines <$> readFile "./src/day2/input"
-  parsedDirs <- pure $ parseTraverse eachLine
-  pure $ do
-    directions <- parsedDirs
-    Right  $ (scanl $ foldl moveDiamondFlip) D5 directions
+    Right  $ (scanl $ foldl moveFn) startA directions
