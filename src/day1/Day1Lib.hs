@@ -66,7 +66,7 @@ turn n e = toEnum (add (fromEnum (maxBound `asTypeOf` e) + 1) (fromEnum e) n)
 
 -- RUNNING STUFF IN IO
 -- runDay1 :: EitherT ParseError IO String
-runDay1Part1 =  do 
+runDay1Part1 =  do
   moveStrings <-  (splitOn ", ") <$> (readFile "./test/day1/input" )
   parsedRes <-  pure $ (parse moveParser "") <$> moveStrings
   traversed <- pure $ sequence parsedRes
@@ -76,5 +76,5 @@ runDay1Part1 =  do
   putStrLn $ show manhattanDist
 
 
-manhattanDist :: Coord2D -> Integer 
+manhattanDist :: Coord2D -> Integer
 manhattanDist (C2D (x, y)) = (abs x) + (abs y)
