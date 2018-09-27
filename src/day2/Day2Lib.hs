@@ -9,15 +9,17 @@ import Control.Applicative ((<|>), many)
 import Control.Monad.Trans.Either
 
 
-data SquareButton  = B1 | B2 | B3
-                   | B4 | B5 | B6
-                   | B7 | B8 | B9  deriving (Show, Eq)
+data SquareButton  =
+   B1 | B2 | B3
+ | B4 | B5 | B6
+ | B7 | B8 | B9  deriving (Show, Eq)
 
-data DiamondButton  =     D1|
-                      D2| D3| D4|
-                  D5| D6| D7| D8| D9|
-                      DA| DB| DC|
-                          DD       deriving (Show, Eq)
+data DiamondButton  =
+          D1|
+      D2| D3| D4|
+  D5| D6| D7| D8| D9|
+      DA| DB| DC|
+          DD       deriving (Show, Eq)
 
 data Direction = U |
                L | R

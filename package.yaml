@@ -27,6 +27,8 @@ dependencies:
 - parsec-numbers
 - transformers-either
 - split
+- pretty-show
+- hscolour
 
 library:
   source-dirs: src
