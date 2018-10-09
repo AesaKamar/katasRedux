@@ -26,10 +26,14 @@ parseTriple = do
 matrixIdentity :: (Num a, Ord a) => [(a, a, a)] -> [(a, a, a)]
 matrixIdentity = id
 
-matrixRotate :: (Num a, Ord a) => [(a, a, a)] -> [(a, a, a)]
-matrixRotate [] = []
-matrixRotate ((a1, a2, a3) : (a4, a5, a6) : (a7, a8, a9) : rest ) =
-              (a1, a4, a7) : (a2, a5, a8) : (a3, a6, a9) : matrixRotate rest
+matrixTranspose :: (Num a, Ord a) => [(a, a, a)] -> [(a, a, a)]
+matrixTranspose [] = []
+matrixTranspose ((a1, a2, a3) :
+                 (a4, a5, a6) :
+                 (a7, a8, a9) : rest ) =
+                              (a1, a4, a7) :
+                              (a2, a5, a8) :
+                              (a3, a6, a9) : matrixTranspose rest
 
 
 solution :: ([(Int, Int, Int)] -> [(Int, Int, Int)]) -> IO ()
@@ -42,4 +46,4 @@ solution rotation = do
 
 
 part1 = solution matrixIdentity
-part2 = solution matrixRotate
+part2 = solution matrixTranspose
