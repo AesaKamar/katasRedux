@@ -38,32 +38,26 @@ verify r =
   let allLetterGroups = group $ sort $ mconcat $ letters r
       lettersByFrequency = sortBy sortByLengthThenLexicographic allLetterGroups
       firstLettersReversed = reverse $ head <$> lettersByFrequency
-  in take 5 firstLettersReversed == checkSum r
+  in take (length $ checkSum r) firstLettersReversed == checkSum r
 
 decrypt :: Room -> [String]
 decrypt r = let
-  encryptedSentence = letters r
-  shiftAmount = sectorId r `mod` length alphabet
-  cypherAlphabet =  take (length alphabet) $ drop shiftAmount $ cycle alphabet
-  mapping = Map.fromList $ alphabet `zip` cypherAlphabet
+  n = length alphabet
+  shiftAmount = sectorId r `mod` n
+  cypherAlphabet =  take n $ drop shiftAmount $ cycle alphabet
+  mapping = Map.fromList (alphabet `zip` cypherAlphabet)
   decryptedSentence = do
-    encryptedWord <- encryptedSentence
+    encryptedWord <- letters r
     pure $ (mapping Map.!) <$> encryptedWord
   in decryptedSentence
 
 solution = do
   inString <- lines <$> readFile "src/day4/input"
   something <- pure $ do
-    rooms <- parse roomParser ""  `traverse` inString
-    sumOfVerified <- pure $ sum $ sectorId <$> filter verify rooms
-    pure  sumOfVerified
-  print something
-
-
-solution2 = do
-  inString <- lines <$> readFile "src/day4/input"
-  something <- pure $ do
-    rooms <- parse roomParser ""  `traverse` inString
-    decryptedRooms <- pure $ (decrypt <$> rooms) `zip` (sectorId <$> rooms)
-    pure $ find (\x -> fst x == ["northpole", "object", "storage"]) decryptedRooms
-  print something
+    rooms <- parse roomParser "" `traverse` inString
+    let verifiedRooms = filter verify rooms
+    let part1 = sum $ sectorId <$> verifiedRooms
+    let decryptedRooms = (decrypt <$> rooms) `zip` (sectorId <$> rooms)
+    let part2 = find ((["northpole", "object", "storage"] ==) . fst) decryptedRooms
+    pure  part1
+  putStrLn $ show something
