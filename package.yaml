@@ -29,6 +29,7 @@ dependencies:
 - split
 - pretty-show
 - hscolour
+- containers
 
 library:
   source-dirs: src
