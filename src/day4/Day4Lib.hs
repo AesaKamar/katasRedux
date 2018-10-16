@@ -1,7 +1,7 @@
 module Day4Lib where
 
 import Text.Parsec (many, many1)
-import Text.Parsec.Combinator (sepBy)
+import Text.Parsec.Combinator (sepBy, between)
 import Text.ParserCombinators.Parsec.Number (int)
 import Text.Parsec.String
 import Text.Parsec.Prim (parse)
@@ -11,19 +11,17 @@ import qualified Data.Map.Lazy as Map
 import Data.Monoid (mconcat)
 import Data.List (sortBy, sort, group, intercalate, find)
 
-data Room = Room { letters  :: [[Char]]
+data Room = Room { letters  :: [String]
                  , sectorId :: Int
                  , checkSum :: [Char]
                  } deriving (Show, Eq)
 
 roomParser :: Parser Room
 roomParser = do
-  l <- takeWhile (/= "") <$> many letter `sepBy` char '-'
+  l <-  many letter `sepBy` char '-'
   n <- int
-  _ <- char '['
-  c <- many1 letter
-  _ <- char ']'
-  pure Room {letters = l, sectorId = n, checkSum = c}
+  c <- between (char '[') (char ']') (many1 letter)
+  pure Room {letters = init l, sectorId = n, checkSum = c}
 
 sortByLengthThenLexicographic :: String -> String -> Ordering
 sortByLengthThenLexicographic a b = if length a == length b
@@ -60,4 +58,4 @@ solution = do
     let decryptedRooms = (decrypt <$> rooms) `zip` (sectorId <$> rooms)
     let part2 = find ((["northpole", "object", "storage"] ==) . fst) decryptedRooms
     pure  part1
-  putStrLn $ show something
+  print something
