@@ -21,15 +21,16 @@ description:         Please see the README on GitHub at <https://github.com/aesa
 
 dependencies:
 - base >= 4.7 && < 5
-- tasty
-- tasty-hspec
+- containers
+- cryptohash
+- hscolour
 - parsec
 - parsec-numbers
-- transformers-either
-- split
 - pretty-show
-- hscolour
-- containers
+- split
+- tasty
+- tasty-hspec
+- transformers-either
 
 library:
   source-dirs: src
