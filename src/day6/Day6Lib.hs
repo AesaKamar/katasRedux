@@ -1,4 +1,3 @@
-{-# LANGUAGE TupleSections #-}
 module Day6Lib where
 
 import Data.Map.Lazy hiding (take, foldl, filter, showTree)
@@ -24,4 +23,8 @@ solution = do
   input <- lines <$> readFile "src/day6/input"
   let result = foldl updateMap mempty input
   pure $
-   fmap (sortBy (\ (_, i1) (_, i2) -> compare i1 i2) . toList) result
+   (sortBy compareSnd . toList) <$> result
+
+
+compareSnd :: Ord b =>  (a, b) -> (a, b) -> Ordering
+compareSnd (_, i1) (_, i2) = compare i1 i2
