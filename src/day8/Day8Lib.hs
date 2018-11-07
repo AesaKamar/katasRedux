@@ -75,7 +75,7 @@ solution = do
     let part1Debug = printMap <$> scanl interpretCmd emptyPanel commands
     pure part1Debug
 
-
+printMap :: M.Map (Int, Int) Bool -> [String] 
 printMap m =
   let sortedList = L.sortOn (snd . fst) (M.toList m)
       groupedList =  L.groupBy (\((_, a), _) ((_, b), _) -> a == b) sortedList
