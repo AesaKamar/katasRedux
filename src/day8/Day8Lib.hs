@@ -25,7 +25,7 @@ panelWidth = 50
 panelHeight = 6
 
 initMap :: (Int, Int) ->  M.Map (Int, Int) Bool
-initMap (width, height) = M.fromList [((x, y), False)
+initMap (width, height) = M.fromAscList [((x, y), False)
                           | x <- [0..width-1]
                           , y <- [0..height-1]]
 
@@ -42,7 +42,7 @@ commandParser = try rectParser <|>
 
 interpretCmd :: M.Map (Int, Int) Bool -> Command -> M.Map (Int, Int) Bool
 interpretCmd m (Rect (width, height)) =
-  M.fromList [((x, y), True)
+  M.fromAscList [((x, y), True)
     | x <- [0..width-1]
     , y <- [0..height-1]] <> m
 interpretCmd m (RotateRow (y, amount)) =
@@ -51,9 +51,11 @@ interpretCmd m (RotateCol (x, amount)) =
   modCol amount (colAt x m) <> m
 
 rowAt :: Int -> M.Map (Int, Int) Bool -> M.Map (Int, Int) Bool
-rowAt y m = M.restrictKeys m (Set.fromList [(x, y) | x <- [0..panelWidth]])
+rowAt y m = M.restrictKeys m rowSlice where
+  rowSlice = Set.fromAscList [(x, y) | x <- [0..panelWidth]]
 colAt :: Int -> M.Map (Int, Int) Bool -> M.Map (Int, Int) Bool
-colAt x m = M.restrictKeys m (Set.fromList [(x, y) | y <- [0..panelHeight]])
+colAt x m = M.restrictKeys m colSlice where
+  colSlice = Set.fromAscList [(x, y) | y <- [0..panelHeight]]
 
 modRow :: Int ->  M.Map (Int, Int) Bool -> M.Map (Int, Int) Bool
 modRow shiftAmt m = M.mapWithKey
@@ -68,17 +70,14 @@ solution = do
   let parsed = parse commandParser "" `traverse` input
   pure $ do
     commands <- parsed
-    let part1 = M.size $ M.filter id $ foldl interpretCmd (initMap (panelWidth , panelHeight )) commands
-    let part1Debug = printMap <$> scanl interpretCmd (initMap (panelWidth , panelHeight )) commands
+    let emptyPanel = initMap (panelWidth , panelHeight )
+    let part1 = M.size $ M.filter id $ foldl interpretCmd emptyPanel commands
+    let part1Debug = printMap <$> scanl interpretCmd emptyPanel commands
     pure part1Debug
 
 
-
-
-
--- printMap ::  M.Map (Int, Int) Bool -> [[((Int, Int), Bool)]]
 printMap m =
-  let sortedList = L.sortOn (\((_, a), _) -> a) (M.toList m)
+  let sortedList = L.sortOn (snd . fst) (M.toList m)
       groupedList =  L.groupBy (\((_, a), _) ((_, b), _) -> a == b) sortedList
-      justBools = fmap (fmap (\((_, _), bool) -> if bool then '#' else '.') ) groupedList
-  in justBools
+      panel = fmap (fmap (\((_, _), bool) -> if bool then '#' else '.') ) groupedList
+  in panel
