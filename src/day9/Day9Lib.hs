@@ -30,8 +30,6 @@ markerParser =
   (Marker <$> between (char '(') (char ')') ((int <* char 'x') `tup` int) `tup` many anyChar)
     <|>
   try (NoMarker <$> many (noneOf "(") `tup` (many (oneOf "(") <> many anyChar) )
-    <|>
-  (NoMarker <$> many anyChar `tup` mempty )
 
 extract :: Fragment -> (ExpandedFragment, String)
 extract (Marker ((n, rep), s)) =
