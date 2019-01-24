@@ -24,6 +24,7 @@ dependencies:
 - containers
 - contravariant
 - cryptohash
+- fixplate
 - hscolour
 - parsec
 - parsec-numbers

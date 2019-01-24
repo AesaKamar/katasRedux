@@ -39,6 +39,7 @@ packages:
 # using the same syntax as the packages field.
 # (e.g., acme-missiles-0.3)
 extra-deps:
+- fixplate-0.1.7
 - parsec-numbers-0.1.0
 - transformers-either-0.1.1
 
