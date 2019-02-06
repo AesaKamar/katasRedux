@@ -18,7 +18,8 @@
 #
 # resolver: ./custom-snapshot.yaml
 # resolver: https://example.com/snapshots/2018-01-01.yaml
-resolver: lts-12.9
+# resolver: lts-12.9
+resolver: lts-12.26
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -39,9 +40,9 @@ packages:
 # using the same syntax as the packages field.
 # (e.g., acme-missiles-0.3)
 extra-deps:
-- fixplate-0.1.7
-- parsec-numbers-0.1.0
-- transformers-either-0.1.1
+- fixplate-0.1.7@sha256:0b9ab2e32aa3383ba2a46d72c63cff88d24beb6e1a19c0dcf71ad3150da8d57a
+- parsec-numbers-0.1.0@sha256:60fa05b1c16050dffd0e28cecb682a021eeec1be6f34dc9d901a38c90182f289
+- transformers-either-0.1.1@sha256:ec3d6fefd90e243b51aecebfc0ebc5db6381c261d473ea2df7ed7b501a8fb961
 
 allow-newer: true
 
