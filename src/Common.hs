@@ -6,8 +6,10 @@ fa <| a  = fa a
 a |$> fa = fa <$> a
 fa <$| a = fa <$> a
 
+
 a |*> fa = fa <*> a
 fa <*| a = fa <*> a
 
 
-tup a b = (,) <$> a <*> b
+
+tup a fa = (,) <$> a <*> fa

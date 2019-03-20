@@ -43,6 +43,8 @@ extra-deps:
 - fixplate-0.1.7@sha256:0b9ab2e32aa3383ba2a46d72c63cff88d24beb6e1a19c0dcf71ad3150da8d57a
 - parsec-numbers-0.1.0@sha256:60fa05b1c16050dffd0e28cecb682a021eeec1be6f34dc9d901a38c90182f289
 - transformers-either-0.1.1@sha256:ec3d6fefd90e243b51aecebfc0ebc5db6381c261d473ea2df7ed7b501a8fb961
+- KdTree-0.2.2.1@sha256:9f1276f1870652f4d93ddac4da39d8d6503de1723376d5ff80d75753e3f6c3d6
+- string-quote-0.0.1@sha256:7d91a0ba1be44b2443497c92f2f027cd4580453b893f8b5ebf061e1d85befaf3
 
 allow-newer: true
 

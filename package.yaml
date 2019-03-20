@@ -24,12 +24,15 @@ dependencies:
 - containers
 - contravariant
 - cryptohash
+- transformers-either
 - fixplate
 - hscolour
+- KdTree
 - parsec
 - parsec-numbers
 - pretty-show
 - split
+- string-quote
 - tasty
 - tasty-hspec
 - transformers-either
