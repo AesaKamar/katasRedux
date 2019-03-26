@@ -93,7 +93,6 @@ isNonInfiniteRegion (s, _) = let
   intersection = S.intersection (wallPoints |$> (\i -> IndexedManhattanPoint (0, i)) |> S.fromList) s
   in intersection |> S.null
 
-
 -- kd = fromList coordsToSearch
 -- solution :: IO String
 solution = do
